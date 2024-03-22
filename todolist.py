@@ -1,5 +1,6 @@
 import tkinter
 import random
+import tkinter.messagebox
 
 #create root window
 root=tkinter.Tk()
@@ -8,11 +9,11 @@ root.configure(bg="white")
 #change title
 root.title("To-Do List")
 #change window size
-root.geometry("200x500")
+root.geometry("325x275")
 #create empty list
 tasks=[]
 #for testing puopses use a default list
-tasks=["call mom","buy a guitar","sushi"]
+#tasks=["call mom","buy a guitar","sushi"]
 
 #create functions
 def update_listbox():
@@ -33,16 +34,19 @@ def add_task():
         #update the listbox
         update_listbox()
     else:
-        lbl_display["text"]="Please enter the task"
+        tkinter.messagebox.showwarning("Warning", "You need to enter the task")
     txt_input.delete(0,"end")
 def del_all():
-    #since we are changeing the lists it needs to be global
-    global tasks
-    #clear the tasks list
-    tasks=[]
-    #update the list box
-    update_listbox()
+    confirmed=tkinter.messagebox.askyesno("Please confirm","Do you really want to delete all?")
+    if confirmed==True:
+        #since we are changeing the lists it needs to be global
+        global tasks
+        #clear the tasks list
+        tasks=[]
+        #update the list box
+        update_listbox()
 def del_one():
+
     #get the text of currently selected task
     task=lb_tasks.get("active")
     #confirms it in a list
@@ -78,29 +82,40 @@ def show_number_of_tasks():
 
 #create lables and buttons
 lbl_title=tkinter.Label(root,text="To-Do-List",bg="white")
-lbl_title.pack()
+lbl_title.grid(row=0,column=0)
+
 lbl_display=tkinter.Label(root,text="",bg="white")
-lbl_display.pack()
+lbl_display.grid(row=0,column=1)
+
 txt_input=tkinter.Entry(root,width=15)
-txt_input.pack()
-btn_add_task=tkinter.Button(root,text="Add Task",fg="green",bg="white",command=add_task)
-btn_add_task.pack()
-btn_del_all=tkinter.Button(root,text="Delete All",fg="green",bg="white",command=del_all)
-btn_del_all.pack()
-btn_del_one=tkinter.Button(root,text="Delete One",fg="green",bg="white",command=del_one)
-btn_del_one.pack()
-btn_sort_asc=tkinter.Button(root,text="Sort(Asc)",fg="green",bg="white",command=sort_asc)
-btn_sort_asc.pack()
-btn_sort_desc=tkinter.Button(root,text="Sort(Desc)",fg="green",bg="white",command=sort_desc)
-btn_sort_desc.pack()
-btn_choose_random=tkinter.Button(root,text="Choose Random",fg="green",bg="white",command=choose_random)
-btn_choose_random.pack()
-btn_number_of_tasks=tkinter.Button(root,text="Number of Tasks",fg="green",bg="white",command=show_number_of_tasks)
-btn_number_of_tasks.pack()
-btn_exit=tkinter.Button(root,text="Exit",fg="green",bg="white",command=exit)
-btn_exit.pack()
+txt_input.grid(row=1,column=1)
+
+btn_add_task=tkinter.Button(root,text="Add Task",fg="green",bg="white",width=15,command=add_task)
+btn_add_task.grid(row=1,column=0)
+
+btn_del_all=tkinter.Button(root,text="Delete All",fg="green",bg="white",width=15,command=del_all)
+btn_del_all.grid(row=2,column=0)
+
+btn_del_one=tkinter.Button(root,text="Delete One",fg="green",bg="white",width=15,command=del_one)
+btn_del_one.grid(row=3,column=0)
+
+btn_sort_asc=tkinter.Button(root,text="Sort(Asc)",fg="green",bg="white",width=15,command=sort_asc)
+btn_sort_asc.grid(row=4,column=0)
+
+btn_sort_desc=tkinter.Button(root,text="Sort(Desc)",fg="green",bg="white",width=15,command=sort_desc)
+btn_sort_desc.grid(row=5,column=0)
+
+btn_choose_random=tkinter.Button(root,text="Choose Random",fg="green",bg="white",width=15,command=choose_random)
+btn_choose_random.grid(row=6,column=0)
+
+btn_number_of_tasks=tkinter.Button(root,text="Number of Tasks",fg="green",bg="white",width=15,command=show_number_of_tasks)
+btn_number_of_tasks.grid(row=7,column=0)
+
+btn_exit=tkinter.Button(root,text="Exit",fg="green",bg="white",width=15,command=exit)
+btn_exit.grid(row=8,column=0)
+
 lb_tasks=tkinter.Listbox(root)
-lb_tasks.pack()
+lb_tasks.grid(row=2,column=1,rowspan=7)
 
 #starts the main event loop
 root.mainloop()
